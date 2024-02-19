@@ -57,7 +57,7 @@ function SignIn() {
                 onChange={(e) => setPassword(e.target.value)}
             />
           </label>
-          {error && <p className="error">Combinatie van emailadres en wachtwoord is onjuist</p>}
+          {error && <p className="error">Combinatie van e-mailadres en wachtwoord is onjuist</p>}
 
           <button
               type="submit"

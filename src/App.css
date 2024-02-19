@@ -8,7 +8,7 @@ button {
   border: none;
   /*color: white;*/
   padding: 8px 16px;
-  background-color: #f5ab00;
+  background-color: #e33406;
   color: white;
   font-weight: bold;
 }
@@ -70,10 +70,10 @@ h2 {
 }
 
 nav {
-  background-color: #0d3b66;
+  background-color: #2d1111;
   color: white;
   display: flex;
-  padding: 0 32px;
+  padding: 16px 32px;
   align-items: center;
   justify-content: space-between;
 }
@@ -92,8 +92,8 @@ nav a:active {
 }
 
 .logo-container img {
-  width: 40px;
-  margin-right: 8px;
+  width: 80px;
+  margin-right: 16px;
 }
 
 section  {
@@ -109,6 +109,12 @@ section  {
   width: 16px;
   height: 16px;
   animation: rotating 1.5s linear infinite;
+}
+.home-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  font-size: 32px;
 }
 
 @keyframes rotating {

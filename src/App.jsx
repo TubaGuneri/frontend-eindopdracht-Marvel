@@ -20,7 +20,7 @@ function App() {
                     <Route path="/profile" element={isAuth ? <Profile /> : <Navigate to="/login"/>}/>
                     <Route path="/signin" element={<SignIn />}/>
                     <Route path="/signup" element={<SignUp />}/>
-                </Routes>
+                                   </Routes>
             </div>
         </>
     );
