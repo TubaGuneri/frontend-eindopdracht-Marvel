@@ -15,8 +15,8 @@ function Home() {
                         verbeelding te boven gaat!
                     </p>
                     <p>Als je ingelogd bent, bekijk dan de <Link to="/profile">Profielpagina</Link></p>
-                    <p>Heb je al een account? Log in via de volgende link: <Link to="/signin">inloggen</Link>.</p>
-                    <p>Heb je geen account? Registreer je jezelf eerst via de volgende link : <Link to="/signup">registeren</Link></p>
+                    <p>Heb je al een account? Log in via de volgende link: <Link to="/signin">Inloggen</Link>.</p>
+                    <p>Heb je geen account? Registreer je jezelf eerst via de volgende link : <Link to="/signup">Registeren</Link></p>
                 </article>
                 <article className='home-right'>
                     <img src={pichomepage} alt='picture-homepage'/>

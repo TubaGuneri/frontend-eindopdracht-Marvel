@@ -4,18 +4,18 @@ import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
 
 function SignIn() {
-  const [email, setEmail] = useState('');
+  const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [error, toggleError] = useState(false);
   const { login } = useContext(AuthContext);
-
+const baseUrl = 'https://frontend-educational-backend.herokuapp.com';
   async function handleSubmit(e) {
     e.preventDefault();
     toggleError(false);
 
     try {
-      const result = await axios.post('http://localhost:3000/login', {
-        email: email,
+      const result = await axios.post(`${baseUrl}/api/auth/signin`, {
+        username: userName,
         password: password,
       });
       // log het resultaat in de console
@@ -36,14 +36,14 @@ function SignIn() {
 
 
         <form onSubmit={handleSubmit}>
-          <label htmlFor="email-field">
-            Emailadres:
+          <label htmlFor="username-field">
+            Username:
             <input
-                type="email"
-                id="email-field"
-                name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                type="username"
+                id="username-field"
+                name="username"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
             />
           </label>
 
@@ -57,7 +57,7 @@ function SignIn() {
                 onChange={(e) => setPassword(e.target.value)}
             />
           </label>
-          {error && <p className="error">Combinatie van e-mailadres en wachtwoord is onjuist</p>}
+          {error && <p className="error">Combinatie van username en wachtwoord is onjuist</p>}
 
           <button
               type="submit"

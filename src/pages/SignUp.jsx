@@ -12,14 +12,31 @@ function SignUp() {
   const [error, toggleError] = useState(false);
   const [loading, toggleLoading] = useState(false);
   const navigate = useNavigate();
+const baseUrl = 'https://frontend-educational-backend.herokuapp.com';
+
+// NOVI-backend test:
+//  async function backEndTest () {
+ //
+ //    try {
+ //      const result = await axios.get(`${baseUrl}/api/test/all`)
+ //      console.log(result);
+ //    } catch (e) {
+ //      console.error(e);
+ //      toggleError(true);
+ //    }
+ //  }
+ // void backEndTest();
+
 
   async function handleSubmit(e) {
     e.preventDefault();
     toggleError(false);
     toggleLoading(true);
 
+
+
     try {
-      await axios.post('http://localhost:3000/register', {
+      await axios.post(`${baseUrl}/api/auth/signup`, {
         email: email,
         password: password,
         username: username,
@@ -41,9 +58,7 @@ function SignUp() {
   return (
       <>
         <h1>Registreren</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur atque consectetur, dolore eaque eligendi
-          harum, numquam, placeat quisquam repellat rerum suscipit ullam vitae. A ab ad assumenda, consequuntur deserunt
-          doloremque ea eveniet facere fuga illum in numquam quia reiciendis rem sequi tenetur veniam?
+        <p>Heb je nog geen account? Vul dan het volgende formulier in en klik op Registreren.
         </p>
         <form onSubmit={handleSubmit}>
           <label htmlFor="email-field">

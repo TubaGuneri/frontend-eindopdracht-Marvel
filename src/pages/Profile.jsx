@@ -14,8 +14,9 @@ function Profile() {
       // haal de token uit de Local Storage om in het GET-request te bewijzen dat we geauthoriseerd zijn
       const token = localStorage.getItem('token');
 
+      const baseUrl= 'https://frontend-educational-backend.herokuapp.com/';
       try {
-        const result = await axios.get('http://localhost:3000/660/private-content', {
+        const result = await axios.get(`${baseUrl}/profile`, {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
