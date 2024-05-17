@@ -7,6 +7,20 @@ function NavBar() {
     const {isAuth, logout} = useContext(AuthContext);
     const navigate = useNavigate();
 //console.log (isAuth, "in the navbar");
+    const handleProfileButton = ()=>{
+        navigate("/profile");
+    }
+    const handleOverviewButton = ()=>{
+        navigate("/overview");
+    }
+    const handleComicsButton = ()=>{
+        navigate("/comics");
+    }
+
+    const handleLogoutButton = ()=>{
+        logout();
+        navigate("/");
+    }
 
     return (
         <nav>
@@ -18,25 +32,23 @@ function NavBar() {
 
             {isAuth ?
                 <>
-                    <button type="button" onClick={() => {
-                        navigate("/profile")
-                    }}>
+                <div>
+                    <button type="button"  onClick={handleProfileButton} >
                         Profile
                     </button>
                     <button
                         type="button"
-                        onClick={() => {
-                            navigate("/overview")
-                        }}>
+                        onClick={handleOverviewButton}
+                    >
                         Overview
                     </button>
                     <button
                         type="button"
-                        onClick={() => {
-                            navigate("/comics")
-                        }}>
+                        onClick={handleComicsButton}
+                    >
                         Comics
                     </button>
+                </div>
                     <button
                         type="button"
                         onClick={() => {
@@ -45,6 +57,14 @@ function NavBar() {
                         }}>
                         Log uit
                     </button>
+                    <div>
+                        <button
+                    type="button"
+                    onClick={handleLogoutButton}
+                >
+                    Log uit
+                </button>
+                </div>
                 </>
 
                 :

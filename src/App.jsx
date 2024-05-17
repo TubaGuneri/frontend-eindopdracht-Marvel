@@ -8,6 +8,7 @@ import SignUp from './pages/SignUp';
 import { AuthContext } from './context/AuthContext';
 import './App.css';
 import OverView from "./pages/OverView.jsx";
+import Character from "./pages/Character.jsx";
 
 function App() {
     const { isAuth } = useContext(AuthContext);
@@ -17,11 +18,14 @@ function App() {
             <NavBar />
             <div className="content">
                 <Routes>
-                    <Route path="*" element={isAuth ? <Profile/> : <Home />}/>
-                    <Route path="/overview" element={<OverView/>} />
-                    <Route path="/profile" element={<Profile />} />
+
+                    <Route path="*" element={isAuth ? <Profile /> : <Home />}/>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/overview" element={isAuth ? <OverView/> : <SignIn />} />
+                    <Route path="/profile" element={isAuth ? <Profile /> : <SignIn />} />
                     <Route path="/signin" element={<SignIn />}/>
                     <Route path="/signup" element={<SignUp />}/>
+                    <Route path='/character/:id' element={<Character/>}/>
                 </Routes>
             </div>
         </>
