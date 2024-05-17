@@ -33,19 +33,17 @@ const baseUrl = 'https://frontend-educational-backend.herokuapp.com';
     toggleError(false);
     toggleLoading(true);
 
-
-
     try {
       await axios.post(`${baseUrl}/api/auth/signup`, {
         email: email,
         password: password,
         username: username,
+        role: ['user']
       });
 
       // Let op: omdat we geen axios Canceltoken gebruiken zul je hier een memory-leak melding krijgen.
-      // Om te zien hoe je een canceltoken implementeerd kun je de bonus-branch bekijken!
 
-      // als alles goed gegaan is, linken we dyoor naar de login-pagina
+      // als alles goed gegaan is, linken we door naar de login-pagina
       navigate('/signin');
     } catch(e) {
       console.error(e);
@@ -58,7 +56,7 @@ const baseUrl = 'https://frontend-educational-backend.herokuapp.com';
   return (
       <>
         <h1>Registreren</h1>
-        <p>Heb je nog geen account? Vul dan het volgende formulier in en klik op Registreren.
+        <p>Heb je nog geen account? Vul dan onderstaand formulier in en klik op Registreren
         </p>
         <form onSubmit={handleSubmit}>
           <label htmlFor="email-field">

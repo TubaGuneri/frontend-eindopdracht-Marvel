@@ -1,11 +1,12 @@
-import { useContext } from 'react';
+import {useContext} from 'react';
 import logo from '../assets/Marvel-Logo-2000-2012.png';
-import { useNavigate, Link } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
+import {useNavigate, Link} from 'react-router-dom';
+import {AuthContext} from '../context/AuthContext';
 
 function NavBar() {
-    const { isAuth, logout } = useContext(AuthContext);
+    const {isAuth, logout} = useContext(AuthContext);
     const navigate = useNavigate();
+//console.log (isAuth, "in the navbar");
 
     return (
         <nav>
@@ -16,12 +17,36 @@ function NavBar() {
             </Link>
 
             {isAuth ?
-                <button
-                    type="button"
-                    onClick={logout}
-                >
-                    Log uit
-                </button>
+                <>
+                    <button type="button" onClick={() => {
+                        navigate("/profile")
+                    }}>
+                        Profile
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => {
+                            navigate("/overview")
+                        }}>
+                        Overview
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => {
+                            navigate("/comics")
+                        }}>
+                        Comics
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => {
+                            logout();
+                            navigate("/");
+                        }}>
+                        Log uit
+                    </button>
+                </>
+
                 :
                 <div>
                     <button

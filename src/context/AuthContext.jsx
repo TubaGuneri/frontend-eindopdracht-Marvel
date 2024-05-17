@@ -4,8 +4,10 @@ import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
 
 export const AuthContext = createContext( {} );
+const baseUrl = 'https://frontend-educational-backend.herokuapp.com';
 
 function AuthContextProvider( { children } ) {
+  const [error, toggleError] = useState(false);
   const [ isAuth, toggleIsAuth ] = useState( {
     isAuth: false,
     user: null,
@@ -13,8 +15,26 @@ function AuthContextProvider( { children } ) {
   } );
   const navigate = useNavigate();
 
+  async function backEndTest () {
+      // debugger;
+       try {
+         const result = await axios.get(`${baseUrl}/api/test/all`)
+         // console.log(result);
+       } catch (e) {
+         console.error(e);
+         toggleError(true);
+       }
+     }
+    void backEndTest();
+  // useEffect(() => {
+  //   // eslint-disable-next-line no-debugger
+  //   debugger;
+  //   test();
+  // })
+
   // MOUNTING EFFECT
   useEffect( () => {
+    // debugger;
     // haal de JWT op uit Local Storage
     const token = localStorage.getItem( 'token' );
 
@@ -33,11 +53,13 @@ function AuthContextProvider( { children } ) {
   }, [] );
 
   function login( JWT ) {
+    // eslint-disable-next-line no-debugger
+    // debugger;
     // zet de token in de Local Storage
     localStorage.setItem( 'token', JWT );
     // decode de token zodat we de ID van de gebruiker hebben en data kunnen ophalen voor de context
     const decoded = jwtDecode( JWT );
-
+console.log(decoded);
     // geef de ID, token en redirect-link mee aan de fetchUserData functie (staat hieronder)
     void fetchUserData( decoded.sub, JWT, '/profile' );
     // link de gebruiker door naar de profielpagina
@@ -57,10 +79,11 @@ function AuthContextProvider( { children } ) {
   }
 
   // Omdat we deze functie in login- en het mounting-effect gebruiken, staat hij hier gedeclareerd!
-  async function fetchUserData( id, token, redirectUrl ) {
+  async function fetchUserData(id, token, redirectUrl ) {
+    // debugger;
     try {
       // haal gebruikersdata op met de token en id van de gebruiker
-      const result = await axios.get( `https://frontend-educational-backend.herokuapp.com/${ id }`, {
+      const result = await axios.get( `https://frontend-educational-backend.herokuapp.com/api/user`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${ token }`,
