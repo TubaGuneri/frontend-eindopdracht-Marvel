@@ -9,6 +9,8 @@ import { AuthContext } from './context/AuthContext';
 import './App.css';
 import OverView from "./pages/OverView.jsx";
 import Character from "./pages/Character.jsx";
+import ComicsDetail from "./pages/ComicsDetail.jsx";
+import Comics from "./pages/Comics.jsx";
 
 function App() {
     const { isAuth } = useContext(AuthContext);
@@ -25,7 +27,9 @@ function App() {
                     <Route path="/profile" element={isAuth ? <Profile /> : <SignIn />} />
                     <Route path="/signin" element={<SignIn />}/>
                     <Route path="/signup" element={<SignUp />}/>
-                    <Route path='/character/:id' element={<Character/>}/>
+                    <Route path='/character/:id' element={isAuth ? <Character/> : <SignIn />}/>
+                    <Route path="/comics/:id" element={isAuth ? <ComicsDetail /> : <SignIn />} />
+                    <Route path="/comics" element={isAuth ? <Comics /> : <SignIn />} />
                 </Routes>
             </div>
         </>

@@ -5,7 +5,7 @@ import Card from "./Card";
 import "./OverView.css";
 
 function Comics() {
-    const [apiKey,] = useState("2e1cdeec426ae323484f29024084c206&hash=d516513ba95b9407c7aca0f73b241f8a"); //("15e7b5da9cfd7722cf24b8473f9f5958&hash=cd809846576729ff9c78e436584b28ac");
+    const [apiKey,] = useState("2e1cdeec426ae323484f29024084c206&hash=d516513ba95b9407c7aca0f73b241f8a");
     const [url, setUrl] = useState(
         `http://gateway.marvel.com/v1/public/comics?ts=1&apikey=${apiKey}`
     );
@@ -40,7 +40,7 @@ function Comics() {
                         className="search"
                         onChange={(e) => setSearch(e.target.value)}
                     />
-                    <button   className="search-button"  onClick={handleClick} >Seacrh</button>
+                    <button   className="search-button"  onClick={handleClick} >Search</button>
                 </div>{" "}
             </div>
             <div className="contentComics">
