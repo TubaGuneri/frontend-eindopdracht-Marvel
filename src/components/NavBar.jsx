@@ -7,17 +7,17 @@ function NavBar() {
     const {isAuth, logout} = useContext(AuthContext);
     const navigate = useNavigate();
 //console.log (isAuth, "in the navbar");
-    const handleProfileButton = ()=>{
+    const handleProfileButton = () => {
         navigate("/profile");
     }
-    const handleOverviewButton = ()=>{
+    const handleOverviewButton = () => {
         navigate("/overview");
     }
-    const handleComicsButton = ()=>{
+    const handleComicsButton = () => {
         navigate("/comics");
     }
 
-    const handleLogoutButton = ()=>{
+    const handleLogoutButton = () => {
         logout();
         navigate("/");
     }
@@ -32,39 +32,39 @@ function NavBar() {
 
             {isAuth ?
                 <>
-                <div>
-                    <button type="button"  onClick={handleProfileButton} >
-                        Profile
-                    </button>
-                    <button
-                        type="button"
-                        onClick={handleOverviewButton}
-                    >
-                        Overview
-                    </button>
-                    <button
-                        type="button"
-                        onClick={handleComicsButton}
-                    >
-                        Comics
-                    </button>
-                </div>
-                    <button
-                        type="button"
-                        onClick={() => {
-                            logout();
-                            navigate("/");
-                        }}>
-                        Log uit
-                    </button>
+                    <div>
+                        <button type="button" onClick={handleProfileButton}>
+                            Profile
+                        </button>
+                        <button
+                            type="button"
+                            onClick={handleOverviewButton}
+                        >
+                            Overview
+                        </button>
+                        <button
+                            type="button"
+                            onClick={handleComicsButton}
+                        >
+                            Comics
+                        </button>
+                    </div>
+                    {/*<button*/}
+                    {/*    type="button"*/}
+                    {/*    onClick={() => {*/}
+                    {/*        logout();*/}
+                    {/*        navigate("/");*/}
+                    {/*    }}>*/}
+                    {/*    Log uit*/}
+                    {/*</button>*/}
                     <div>
                         <button
-                    type="button"
-                    onClick={handleLogoutButton}
-                >
-                    Log uit
-                </button>
-                </div>
+                            type="button"
+                            onClick={handleLogoutButton}
+                        >
+                            Log uit
+                        </button>
+                    </div>
                 </>
 
                 :

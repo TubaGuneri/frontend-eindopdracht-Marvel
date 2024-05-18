@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
 import Card from "./Card";
-import "./OverView.css";
+
 
 function Comics() {
     const [apiKey,] = useState("2e1cdeec426ae323484f29024084c206&hash=d516513ba95b9407c7aca0f73b241f8a"); //("15e7b5da9cfd7722cf24b8473f9f5958&hash=cd809846576729ff9c78e436584b28ac");

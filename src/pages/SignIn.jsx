@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import {Link, useNavigate} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
 
@@ -9,11 +9,11 @@ function SignIn() {
   const [error, toggleError] = useState(false);
   const {login} = useContext(AuthContext);
   const baseUrl = 'https://frontend-educational-backend.herokuapp.com';
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
 
   async function handleSubmit(e) {
-    //e.preventDefault();
+    e.preventDefault();
     toggleError(false);
     try {
       const result = await axios.post(`${baseUrl}/api/auth/signin`, {
@@ -25,14 +25,15 @@ function SignIn() {
 
       // geef de JWT token aan de login-functie van de context mee
       login(result.data.accessToken);
-      void handleSubmit();
+      // void handleSubmit();
 
     } catch (e) {
       console.error(e);
       toggleError(true);
-    } finally {
-      navigate('/profile')
     }
+    // finally {
+    //   navigate('/profile')
+    // // }
   }
     return (
         <>

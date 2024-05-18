@@ -1,9 +1,10 @@
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { fetchHero } from "../utils";
+import {useParams} from "react-router-dom";
+import {useEffect, useState} from "react";
+import {fetchHero} from "../utils";
+import CommentApp from "../components/CommentApp.jsx";
 
 function Character() {
-    const { id } = useParams();
+    const {id} = useParams();
     const [item, setItem] = useState();
 
     let name;
@@ -35,7 +36,7 @@ function Character() {
                 <div><span><h1>Character Detail</h1></span>
                     <div className="box-content">
                         <div className="right-box">
-                            <img src={`${thumbnailPath}.${thumbnailExtension}`} alt="" />
+                            <img src={`${thumbnailPath}.${thumbnailExtension}`} alt=""/>
                         </div>
                         <div className="left-box">
                             <h1>{name}</h1>
@@ -54,9 +55,13 @@ function Character() {
                             </ul>
                         </div>
                     </div>
+                    <div className="App">
+                        <CommentApp id={id}/>
+                    </div>
                 </div>
             )}
         </>
     );
 }
+
 export default Character;

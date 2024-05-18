@@ -42,7 +42,6 @@ function Profile() {
             {/*Als er keys in ons object zitten hebben we data, en dan renderen we de content*/}
             {Object.keys(profileData).length > 0 &&
                 <section>
-                    <h2>Strikt geheime profiel-content</h2>
                     <h3>{profileData.title}</h3>
                     <p>{profileData.content}</p>
                 </section>
