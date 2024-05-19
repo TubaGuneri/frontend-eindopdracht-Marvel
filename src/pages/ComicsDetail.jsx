@@ -1,53 +1,95 @@
-import axios from "axios";
-import { useState } from "react";
-import { useEffect } from "react";
-import Card from "./Card";
+import {useParams} from "react-router-dom";
+import {useEffect, useState} from "react";
+import {fetchComics} from "../components/utils.jsx";
+import CommentApp from "../components/CommentApp.jsx";
 
-
-function Comics() {
-    const [apiKey,] = useState("2e1cdeec426ae323484f29024084c206&hash=d516513ba95b9407c7aca0f73b241f8a");
-    const [url, setUrl] = useState(
-        `http://gateway.marvel.com/v1/public/comics?ts=1&apikey=${apiKey}`
-    );
+function ComicsDetail() {
+    const {id} = useParams();
     const [item, setItem] = useState();
-    const [search, setSearch] = useState("");
+    let title;
+    let description;
+    let thumbnailPath;
+    let thumbnailExtension;
+    // let series;
+    let creators;
+    let characters;
+
+
     useEffect(() => {
-        const fetch = async () => {
-            const res = await axios.get(url);
-            setItem(res.data.data.results);
-        };
-        fetch();
-    }, [url]);
+        fetchComics(id)
+            .then((data) => setItem(data))
+            .catch((err) => console.error(err));
+    }, []);
 
-    const searchComics = () => {
-        setUrl(
-            `https://gateway.marvel.com:443/v1/public/comics?titleStartsWith=${search}&ts=1&apikey=${apiKey}`
-        );
-    };
+    if (item) {
+        title = item.data.results[0].title;
+        description= item.data.results[0].description;
+        thumbnailPath = item.data.results[0].thumbnail.path;
+        thumbnailExtension = item.data.results[0].thumbnail.extension;
+        creators = item.data.results[0].creators.items;
+        characters= item.data.results[0].characters.items;
 
-    function handleClick() {
-        console.log(search);
-        searchComics();
     }
-
+    console.log("comics", item);
     return (
         <>
-            <div>
-                <div className="search-bar">
-                    <input
-                        type="search"
-                        placeholder="Search Here"
-                        className="search"
-                        onChange={(e) => setSearch(e.target.value)}
-                    />
-                    <button   className="search-button"  onClick={handleClick} >Search</button>
-                </div>{" "}
-            </div>
-            <div className="contentComics">
-                {!item ? <p>Not Found</p> : <Card data={item} path="comics" />}
-            </div>
+            {!item ?
+                ""
+             : (
+                <div>
+                    <span><h1>Comics Detail</h1></span>
+                    <div className="box-content">
+                        <div className="right-box">
+                            <img src={`${thumbnailPath}.${thumbnailExtension}`} alt=""/>
+                        </div>
+                        <div className="left-box">
+                            <h1>{title}</h1>
+                            <h4>{description}</h4>
+                        </div>
+                    </div>
+                        {characters.length > 0
+                            ?
+                            (<div>
+                                    <h4>Characters</h4>
+                                    <ul>
+                                        {/* eslint-disable-next-line no-unused-vars */}
+                                        {characters.map((character) => (
+                                            <li key={Math.random() * 1000}>{character.name}</li>
+
+                                        ))
+                                        }
+                                    </ul>
+
+                            </div>
+                            )
+                            : null}
+
+                        {creators.length > 0
+                            ?
+                            (<div>
+                                    <h4>Creators</h4>
+                                    <ul>
+                                        {creators.map((items) => (
+                                            <li key={Math.random() * 1000}>{items.name} ({items.role})</li>
+
+                                        ))
+                                        }
+                                    </ul>
+
+                            </div>
+                            )
+                            : null}
+
+                    <div className="App">
+                        <CommentApp id={id} addComment = {true} pageName={ComicsDetail.name} title={title}/>
+                    </div>
+
+                </div>
+
+            )}
         </>
     );
 }
 
-export default Comics;
+export default ComicsDetail;
+

@@ -26,24 +26,17 @@ function AuthContextProvider( { children } ) {
        }
      }
     void backEndTest();
-  // useEffect(() => {
-  //   // eslint-disable-next-line no-debugger
-  //   debugger;
-  //   test();
-  // })
+
 
   // MOUNTING EFFECT
   useEffect( () => {
-    // debugger;
-    // haal de JWT op uit Local Storage
+
     const token = localStorage.getItem( 'token' );
 
-    // als er WEL een token is, haal dan opnieuw de gebruikersdata op
     if ( token ) {
       const decoded = jwtDecode( token );
       void fetchUserData( decoded.sub, token );
     } else {
-      // als er GEEN token is doen we niks, en zetten we de status op 'done'
       toggleIsAuth( {
         isAuth: false,
         user: null,
@@ -53,16 +46,11 @@ function AuthContextProvider( { children } ) {
   }, [] );
 
   function login( JWT ) {
-    // eslint-disable-next-line no-debugger
-    // debugger;
-    // zet de token in de Local Storage
-    localStorage.setItem( 'token', JWT );
-    // decode de token zodat we de ID van de gebruiker hebben en data kunnen ophalen voor de context
-    const decoded = jwtDecode( JWT );
-console.log(decoded);
-    // geef de ID, token en redirect-link mee aan de fetchUserData functie (staat hieronder)
-    void fetchUserData( decoded.sub, JWT, '/profile' );
-    // link de gebruiker door naar de profielpagina
+
+    localStorage.setItem('token', JWT);
+    const decoded = jwtDecode(JWT);
+    console.log(decoded);
+    void fetchUserData(decoded.sub, JWT, '/profile');
     navigate('/profile');
   }
 
@@ -77,12 +65,8 @@ console.log(decoded);
     console.log( 'Gebruiker is uitgelogd!' );
     navigate( '/' );
   }
-
-  // Omdat we deze functie in login- en het mounting-effect gebruiken, staat hij hier gedeclareerd!
   async function fetchUserData(id, token, redirectUrl ) {
-    // debugger;
     try {
-      // haal gebruikersdata op met de token en id van de gebruiker
       const result = await axios.get( `https://frontend-educational-backend.herokuapp.com/api/user`, {
         headers: {
           "Content-Type": "application/json",
@@ -90,7 +74,6 @@ console.log(decoded);
         },
       } );
 
-      // zet de gegevens in de state
       toggleIsAuth( {
         ...isAuth,
         isAuth: true,
@@ -102,15 +85,13 @@ console.log(decoded);
         status: 'done',
       } );
 
-      // als er een redirect URL is meegegeven (bij het mount-effect doen we dit niet) linken we hiernnaartoe door
-      // als we de history.push in de login-functie zouden zetten, linken we al door voor de gebuiker is opgehaald!
       if ( redirectUrl ) {
         navigate( redirectUrl );
       }
 
     } catch ( e ) {
       console.error( e );
-      // ging er iets mis? Plaatsen we geen data in de state
+
       toggleIsAuth( {
         isAuth: false,
         user: null,

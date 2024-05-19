@@ -1,16 +1,19 @@
-import  { useState, useEffect } from 'react';
+import {useState, useEffect, useContext} from 'react';
+import {AuthContext} from "../context/AuthContext.jsx";
 
 
 // eslint-disable-next-line react/prop-types
-const CommentApp = ({ id }) => {
+const CommentApp = ({id, addComment,pageName, title}) => {
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState([]);
+    const {user} = useContext(AuthContext);
 
     useEffect(() => {
-        // op basis van ID haal reviews op en reviews schrijven
-        const savedComments = JSON.parse(localStorage.getItem(`comments-${id}`)) || [];
+        const storageKey = id ? `comments-${id}` : 'allComments';
+        const savedComments = JSON.parse(localStorage.getItem(storageKey)) || [];
         setComments(savedComments);
     }, [id]);
+
 
     const handleCommentChange = (e) => {
         setComment(e.target.value);
@@ -19,35 +22,48 @@ const CommentApp = ({ id }) => {
     const handleCommentSubmit = (e) => {
         e.preventDefault();
         if (comment.trim()) {
-            const newComment = { id: Date.now(), text: comment };
+            let text =  user.username + ":" + comment + `(${pageName} - ${title})`;
+            const newComment = {id: Date.now(), text:text, userId: id || 'general'};
             const newComments = [...comments, newComment];
             setComments(newComments);
-            localStorage.setItem(`comments-${id}`, JSON.stringify(newComments));
+            const storageKey = id ? `comments -${id}` : 'allComments';
+            localStorage.setItem(storageKey, JSON.stringify(newComments));
+
+            const allComments = JSON.parse(localStorage.getItem('allComments')) || [];
+            allComments.push(newComment);
+            localStorage.setItem('allComments', JSON.stringify(allComments));
+
             setComment('');
         }
     };
-
     return (
-        <div>
-            <h1>Review</h1>
-            <form onSubmit={handleCommentSubmit}>
+        <>
+            {addComment ? (<div>
+                <h1>Review</h1>
+                <form onSubmit={handleCommentSubmit}>
         <textarea
             value={comment}
             onChange={handleCommentChange}
-            placeholder="Naam: schrijf je review hier..."
+            placeholder="Schrijf je review hier..."
         />
-                <button type="submit">Plaatsen</button>
-            </form>
+                    <button type="submit">Plaatsen</button>
+                </form>
+
+            </div>) : ""}
+
             <div>
                 <h2>Reviews</h2>
                 <ul>
-                    {comments.map(({ id, text }) => (
+                    {comments.map(({id, text}) => (
                         <li key={id}>{text}</li>
                     ))}
                 </ul>
             </div>
-        </div>
-    );
+
+        </>
+
+
+       );
 };
 
 export default CommentApp;

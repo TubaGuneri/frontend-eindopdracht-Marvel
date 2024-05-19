@@ -17,7 +17,7 @@ p{
   color: black !important;
 }
 
-/*Zorgt ervoor dat als twee buttons naast elkaar staan, er altijd ruimte tussen blijft*/
+
 button + button {
   margin-left: 8px;
 }
@@ -210,7 +210,7 @@ p{
   width: 41%;
   height: 5em;
   transform: rotate(-38deg);
-  box-sizing: 1em;
+  box-sizing: 1rem;
 }
 .box-content{
   width: 100%;
@@ -240,4 +240,13 @@ p{
 }
 .box-content img:hover{
   transform: rotate(0deg);
+}
+
+.footer-navigation {
+  background-color: #2d1111;
+  color: white;
+  display: flex;
+  padding: 16px 32px;
+  justify-content: center;
+  align-items:end;
 }

@@ -1,65 +1,52 @@
-import {useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
-import {fetchHero} from "../utils";
-import CommentApp from "../components/CommentApp.jsx";
+import axios from "axios";
+import { useState } from "react";
+import { useEffect } from "react";
+import Card from "../components/Card.jsx";
+
 
 function Character() {
-    const {id} = useParams();
+    const [apiKey,] = useState("2e1cdeec426ae323484f29024084c206&hash=d516513ba95b9407c7aca0f73b241f8a");
+    const [url, setUrl] = useState(
+        `http://gateway.marvel.com/v1/public/characters?ts=1&apikey=${apiKey}`
+    );
     const [item, setItem] = useState();
-
-    let name;
-    let description;
-    let thumbnailPath;
-    let thumbnailExtension;
-    // let thumbnailUrl;
-    let series;
-
+    const [search, setSearch] = useState("");
     useEffect(() => {
-        fetchHero(id)
-            .then((data) => setItem(data))
-            .catch((err) => console.error(err));
-    }, []);
+        const fetch = async () => {
+            const res = await axios.get(url);
+            setItem(res.data.data.results);
+        };
+        fetch();
+    }, [url]);
 
-    if (item) {
-        name = item.data.results[0].name;
-        description = item.data.results[0].description;
-        thumbnailPath = item.data.results[0].thumbnail.path;
-        thumbnailExtension = item.data.results[0].thumbnail.extension;
-        series = item.data.results[0].series.items;
+    const searchMarvel = () => {
+        setUrl(
+            `https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=${search}&ts=1&apikey=${apiKey}`
+        );
+    };
+
+    function handleClick() {
+        console.log(search);
+        searchMarvel();
     }
 
     return (
         <>
-            {!item ? (
-                ""
-            ) : (
-                <div><span><h1>Character Detail</h1></span>
-                    <div className="box-content">
-                        <div className="right-box">
-                            <img src={`${thumbnailPath}.${thumbnailExtension}`} alt=""/>
-                        </div>
-                        <div className="left-box">
-                            <h1>{name}</h1>
-                            <h4>{description}</h4>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            <h4>Series</h4>
-                            <ul>
-                                {series
-                                    ? series.map((title) => (
-                                        <li key={Math.random() * 1000}>{title.name}</li>
-                                    ))
-                                    : null}
-                            </ul>
-                        </div>
-                    </div>
-                    <div className="App">
-                        <CommentApp id={id}/>
-                    </div>
-                </div>
-            )}
+            <div>
+                <div className="search-bar">
+
+                    <input
+                        type="search"
+                        placeholder="Search Here"
+                        className="search"
+                        onChange={(e) => setSearch(e.target.value)}
+                    />
+                    <button   className="search-button"  onClick={handleClick} >Search</button>
+                </div>{" "}
+            </div>
+            <div className="contentComics">
+                {!item ? <p>Not Found</p> : <Card data={item} path="character" />}
+            </div>
         </>
     );
 }

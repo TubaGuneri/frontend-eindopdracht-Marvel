@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
-import Card from "./Card";
+import Card from "../components/Card.jsx";
 
 
 function Comics() {
@@ -40,7 +40,7 @@ function Comics() {
                         className="search"
                         onChange={(e) => setSearch(e.target.value)}
                     />
-                    <button   className="search-button"  onClick={handleClick} >Seacrh</button>
+                    <button   className="search-button"  onClick={handleClick} >Search</button>
                 </div>{" "}
             </div>
             <div className="contentComics">

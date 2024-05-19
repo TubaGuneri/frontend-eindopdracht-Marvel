@@ -10,8 +10,8 @@ function NavBar() {
     const handleProfileButton = () => {
         navigate("/profile");
     }
-    const handleOverviewButton = () => {
-        navigate("/overview");
+    const handleCharacterButton = () => {
+        navigate("/character");
     }
     const handleComicsButton = () => {
         navigate("/comics");
@@ -38,9 +38,9 @@ function NavBar() {
                         </button>
                         <button
                             type="button"
-                            onClick={handleOverviewButton}
+                            onClick={handleCharacterButton}
                         >
-                            Overview
+                            Character
                         </button>
                         <button
                             type="button"
@@ -49,14 +49,7 @@ function NavBar() {
                             Comics
                         </button>
                     </div>
-                    {/*<button*/}
-                    {/*    type="button"*/}
-                    {/*    onClick={() => {*/}
-                    {/*        logout();*/}
-                    {/*        navigate("/");*/}
-                    {/*    }}>*/}
-                    {/*    Log uit*/}
-                    {/*</button>*/}
+
                     <div>
                         <button
                             type="button"

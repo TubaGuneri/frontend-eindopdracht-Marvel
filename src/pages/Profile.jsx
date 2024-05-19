@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
+import CommentApp from "../components/CommentApp.jsx";
 
 function Profile() {
     const [profileData, setProfileData] = useState({});
@@ -46,9 +47,9 @@ function Profile() {
                     <p>{profileData.content}</p>
                 </section>
             }
-
-            <h2>Mijn favoriete comics</h2>
-
+            <div className="App">
+                <CommentApp id={""} addComment={false}/>
+            </div>
             <p>Terug naar de <Link to="/">Homepagina</Link></p>
         </>
     );
