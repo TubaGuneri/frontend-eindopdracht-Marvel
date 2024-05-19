@@ -1,7 +1,7 @@
 Installatiehandleiding Marvel Fan Applicatie
 
 - Installeer Webstorm
-- Ga naar Github via de link ...
+- Ga naar projectmap in Github via de link https://github.com/TubaGuneri/frontend-eindopdracht-Marvel/pull/1
 - Kloon de projectmap Marvel Fan applicatie
 - Open de projectmap in Webstorm via version control from...
 - Ontkoppel de projectmap van de Github repisotry
