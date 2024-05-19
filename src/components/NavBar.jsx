@@ -1,11 +1,26 @@
-import { useContext } from 'react';
+import {useContext} from 'react';
 import logo from '../assets/Marvel-Logo-2000-2012.png';
-import { useNavigate, Link } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
+import {useNavigate, Link} from 'react-router-dom';
+import {AuthContext} from '../context/AuthContext';
 
 function NavBar() {
-    const { isAuth, logout } = useContext(AuthContext);
+    const {isAuth, logout} = useContext(AuthContext);
     const navigate = useNavigate();
+//console.log (isAuth, "in the navbar");
+    const handleProfileButton = () => {
+        navigate("/profile");
+    }
+    const handleCharacterButton = () => {
+        navigate("/character");
+    }
+    const handleComicsButton = () => {
+        navigate("/comics");
+    }
+
+    const handleLogoutButton = () => {
+        logout();
+        navigate("/");
+    }
 
     return (
         <nav>
@@ -16,12 +31,35 @@ function NavBar() {
             </Link>
 
             {isAuth ?
-                <button
-                    type="button"
-                    onClick={logout}
-                >
-                    Log uit
-                </button>
+                <>
+                    <div>
+                        <button type="button" onClick={handleProfileButton}>
+                            Profile
+                        </button>
+                        <button
+                            type="button"
+                            onClick={handleCharacterButton}
+                        >
+                            Character
+                        </button>
+                        <button
+                            type="button"
+                            onClick={handleComicsButton}
+                        >
+                            Comics
+                        </button>
+                    </div>
+
+                    <div>
+                        <button
+                            type="button"
+                            onClick={handleLogoutButton}
+                        >
+                            Log uit
+                        </button>
+                    </div>
+                </>
+
                 :
                 <div>
                     <button

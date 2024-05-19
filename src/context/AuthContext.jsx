@@ -4,8 +4,10 @@ import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
 
 export const AuthContext = createContext( {} );
+const baseUrl = 'https://frontend-educational-backend.herokuapp.com';
 
 function AuthContextProvider( { children } ) {
+  const [error, toggleError] = useState(false);
   const [ isAuth, toggleIsAuth ] = useState( {
     isAuth: false,
     user: null,
@@ -13,17 +15,28 @@ function AuthContextProvider( { children } ) {
   } );
   const navigate = useNavigate();
 
+  async function backEndTest () {
+      // debugger;
+       try {
+         const result = await axios.get(`${baseUrl}/api/test/all`)
+         // console.log(result);
+       } catch (e) {
+         console.error(e);
+         toggleError(true);
+       }
+     }
+    void backEndTest();
+
+
   // MOUNTING EFFECT
   useEffect( () => {
-    // haal de JWT op uit Local Storage
+
     const token = localStorage.getItem( 'token' );
 
-    // als er WEL een token is, haal dan opnieuw de gebruikersdata op
     if ( token ) {
       const decoded = jwtDecode( token );
       void fetchUserData( decoded.sub, token );
     } else {
-      // als er GEEN token is doen we niks, en zetten we de status op 'done'
       toggleIsAuth( {
         isAuth: false,
         user: null,
@@ -33,14 +46,11 @@ function AuthContextProvider( { children } ) {
   }, [] );
 
   function login( JWT ) {
-    // zet de token in de Local Storage
-    localStorage.setItem( 'token', JWT );
-    // decode de token zodat we de ID van de gebruiker hebben en data kunnen ophalen voor de context
-    const decoded = jwtDecode( JWT );
 
-    // geef de ID, token en redirect-link mee aan de fetchUserData functie (staat hieronder)
-    void fetchUserData( decoded.sub, JWT, '/profile' );
-    // link de gebruiker door naar de profielpagina
+    localStorage.setItem('token', JWT);
+    const decoded = jwtDecode(JWT);
+    console.log(decoded);
+    void fetchUserData(decoded.sub, JWT, '/profile');
     navigate('/profile');
   }
 
@@ -55,19 +65,15 @@ function AuthContextProvider( { children } ) {
     console.log( 'Gebruiker is uitgelogd!' );
     navigate( '/' );
   }
-
-  // Omdat we deze functie in login- en het mounting-effect gebruiken, staat hij hier gedeclareerd!
-  async function fetchUserData( id, token, redirectUrl ) {
+  async function fetchUserData(id, token, redirectUrl ) {
     try {
-      // haal gebruikersdata op met de token en id van de gebruiker
-      const result = await axios.get( `http://localhost:3000/600/users/${ id }`, {
+      const result = await axios.get( `https://frontend-educational-backend.herokuapp.com/api/user`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${ token }`,
         },
       } );
 
-      // zet de gegevens in de state
       toggleIsAuth( {
         ...isAuth,
         isAuth: true,
@@ -79,15 +85,13 @@ function AuthContextProvider( { children } ) {
         status: 'done',
       } );
 
-      // als er een redirect URL is meegegeven (bij het mount-effect doen we dit niet) linken we hiernnaartoe door
-      // als we de history.push in de login-functie zouden zetten, linken we al door voor de gebuiker is opgehaald!
       if ( redirectUrl ) {
         navigate( redirectUrl );
       }
 
     } catch ( e ) {
       console.error( e );
-      // ging er iets mis? Plaatsen we geen data in de state
+
       toggleIsAuth( {
         isAuth: false,
         user: null,
